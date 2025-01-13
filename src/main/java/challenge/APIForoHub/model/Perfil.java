@@ -1,5 +1,7 @@
 package challenge.APIForoHub.model;
 
+import challenge.APIForoHub.DTO.DtoPerfil;
+import challenge.APIForoHub.repository.PerfilRepository;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -22,6 +24,28 @@ public class Perfil {
     @Column(unique = true,nullable = false)
     private String nombre;
 
-    @ManyToMany
+    @OneToMany(mappedBy = "perfil",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<Usuario> autores;
+
+    public Perfil(DtoPerfil dtoPerfil){
+        this.nombre = dtoPerfil.nombre();
+    }
+
+    public Perfil() {
+    }
+
+    @Override
+    public String toString() {
+        return "Perfil: " + nombre;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+
 }

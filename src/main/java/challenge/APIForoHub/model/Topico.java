@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -30,16 +30,82 @@ public class Topico {
     @OneToMany(mappedBy = "topico",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<Respuesta> respuestas;
 
-    public Topico(DtoTopico dtoTopico){
+    @Column(updatable = false)
+    private LocalDateTime fechaCreacion;
+
+    public Topico() {
+    }
+
+    public Topico(DtoTopico dtoTopico, Usuario autor, Curso curso){
         this.titulo = dtoTopico.titulo();
         this.mensaje = dtoTopico.mensaje();
-        //this.autor = new Usuario(dtoTopico.autor());
-        //this.curso = new Curso(dtoTopico.curso());
+        this.fechaCreacion = LocalDateTime.now();
+        this.autor = autor;
+        this.curso = curso;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
+    }
+
+    public Usuario getAutor() {
+        return autor;
+    }
+
+    public void setAutor(Usuario autor) {
+        this.autor = autor;
+    }
+
+    public Curso getCurso() {
+        return curso;
+    }
+
+    public void setCurso(Curso curso) {
+        this.curso = curso;
+    }
+
+    public List<Respuesta> getRespuestas() {
+        return respuestas;
+    }
+
+    public void setRespuestas(List<Respuesta> respuestas) {
+        this.respuestas = respuestas;
+    }
+
+    public LocalDateTime getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(LocalDateTime fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 
     @Override
     public String toString(){
         return "Titulo: " + titulo +
-                "Mensaje: " + mensaje ;
+                "Mensaje: " + mensaje +
+                "Autor: " + autor +
+                "Curso: " + curso +
+                "Fecha de creacion: " + fechaCreacion;
     }
 }

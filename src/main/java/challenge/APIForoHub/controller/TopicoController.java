@@ -2,27 +2,47 @@ package challenge.APIForoHub.controller;
 
 import challenge.APIForoHub.DTO.DtoTopico;
 import challenge.APIForoHub.model.Topico;
-import challenge.APIForoHub.repository.TopicoRepository;
-import challenge.APIForoHub.service.ConvierteDatos;
+import challenge.APIForoHub.service.TopicoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/topicos")
 public class TopicoController {
-    @Autowired
-    private TopicoRepository topicoRepository;
+    private final TopicoService topicoService;
+    private Topico topico;
 
-    private ConvierteDatos convierteDatos = new ConvierteDatos();
+    @Autowired
+    public TopicoController(TopicoService topicoService) {
+        this.topicoService = topicoService;
+    }
+
+    @GetMapping
+    public List<Topico> listadoTopicos(){
+        var lista = topicoService.ListarTodosLosTopicos();
+        System.out.println(lista);
+        return lista;
+    }
 
     @PostMapping
-    public void RegistrarTopico(@RequestBody @Valid DtoTopico dtoTopico){
+    public ResponseEntity<Topico> RegistrarTopico(@RequestBody @Valid DtoTopico dtoTopico){
         System.out.println("el request llega");
         System.out.println(dtoTopico);
-        Topico topico = new Topico(dtoTopico);
-        System.out.println(topico);
 
-        topicoRepository.save(topico);
+        if (topicoService.ValidarTopicoExiste(dtoTopico)){
+            return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).build();
+        }
+        else {
+            topico = topicoService.crearTopico(dtoTopico);
+            return ResponseEntity.status(HttpStatus.CREATED).body(topico);
+        }
     }
+
+
 }
