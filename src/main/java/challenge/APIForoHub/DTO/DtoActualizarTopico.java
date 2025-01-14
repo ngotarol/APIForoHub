@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.UniqueElements;
 
-public record DtoTopico(
+public record DtoActualizarTopico(
         @NotBlank
         @Size(message="Tamaño maximo de titulo: 1000",
                 groups = {},

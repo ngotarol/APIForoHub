@@ -19,4 +19,6 @@ public interface TopicoRepository extends JpaRepository<Topico,Long> {
                 groups = {},
                 max=3000
         ) String mensaje);
+
+    Optional<Topico> findById(Long id);
 }

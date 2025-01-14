@@ -3,6 +3,8 @@ package challenge.APIForoHub.model;
 import challenge.APIForoHub.DTO.DtoPerfil;
 import challenge.APIForoHub.repository.PerfilRepository;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -46,6 +48,5 @@ public class Perfil {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
 
 }

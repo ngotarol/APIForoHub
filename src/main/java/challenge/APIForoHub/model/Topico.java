@@ -1,5 +1,6 @@
 package challenge.APIForoHub.model;
 
+import challenge.APIForoHub.DTO.DtoActualizarTopico;
 import challenge.APIForoHub.DTO.DtoTopico;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -33,15 +34,26 @@ public class Topico {
     @Column(updatable = false)
     private LocalDateTime fechaCreacion;
 
+    private Boolean estado;
+
     public Topico() {
     }
 
-    public Topico(DtoTopico dtoTopico, Usuario autor, Curso curso){
+    public Topico (DtoTopico dtoTopico, Usuario autor, Curso curso){
         this.titulo = dtoTopico.titulo();
         this.mensaje = dtoTopico.mensaje();
         this.fechaCreacion = LocalDateTime.now();
         this.autor = autor;
         this.curso = curso;
+        this.estado = dtoTopico.estado();
+    }
+
+    public void ActualizarTopico(DtoActualizarTopico dtoTopico, Usuario autor, Curso curso){
+        this.titulo = dtoTopico.titulo();
+        this.mensaje = dtoTopico.mensaje();
+        this.autor = autor;
+        this.curso = curso;
+        this.estado = dtoTopico.estado();
     }
 
     public Long getId() {
@@ -98,6 +110,14 @@ public class Topico {
 
     public void setFechaCreacion(LocalDateTime fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
     }
 
     @Override

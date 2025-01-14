@@ -2,6 +2,8 @@ package challenge.APIForoHub.model;
 
 import challenge.APIForoHub.DTO.DtoCurso;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -20,7 +22,7 @@ public class Curso {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true,nullable = false)
+    @Column(unique = true,nullable = false,updatable = false)
     private String nombre;
     @Column(nullable = false)
     private String categoria;
@@ -60,4 +62,7 @@ public class Curso {
         this.categoria = categoria;
     }
 
+    public void ActualizarCurso(@NotNull @Valid DtoCurso curso) {
+        this.categoria = curso.categoria();
+    }
 }

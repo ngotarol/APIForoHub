@@ -3,6 +3,8 @@ package challenge.APIForoHub.model;
 import challenge.APIForoHub.DTO.DtoUsuario;
 import challenge.APIForoHub.repository.PerfilRepository;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -24,7 +26,7 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
-    @Column(unique = true)
+    @Column(unique = true,updatable = false)
     private String login;
     private String clave;
     @OneToMany(mappedBy = "autor",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
@@ -96,6 +98,11 @@ public class Usuario {
     }
 
     public void setPerfil(Perfil perfil) {
+        this.perfil = perfil;
+    }
+
+    public void ActualizarAutor(@NotNull @Valid DtoUsuario autor,Perfil perfil) {
+        this.nombre = autor.nombre();
         this.perfil = perfil;
     }
 }
