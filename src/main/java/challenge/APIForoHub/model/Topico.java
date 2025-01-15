@@ -28,7 +28,7 @@ public class Topico {
     private Usuario autor;
     @ManyToOne
     private Curso curso;
-    @OneToMany(mappedBy = "topico",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "topico",cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
     private List<Respuesta> respuestas;
 
     @Column(updatable = false)

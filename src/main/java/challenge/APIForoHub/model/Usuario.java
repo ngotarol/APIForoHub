@@ -29,7 +29,7 @@ public class Usuario {
     @Column(unique = true,updatable = false)
     private String login;
     private String clave;
-    @OneToMany(mappedBy = "autor",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "autor",cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
     private List<Topico> topicos;
     @ManyToOne()
     private Perfil perfil;

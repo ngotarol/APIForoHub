@@ -11,6 +11,7 @@ import challenge.APIForoHub.repository.CursoRepository;
 import challenge.APIForoHub.repository.PerfilRepository;
 import challenge.APIForoHub.repository.TopicoRepository;
 import challenge.APIForoHub.repository.UsuarioRepository;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -106,6 +107,6 @@ public class TopicoService {
     }
 
     public void EliminarTopico(Long id) {
-         topicoRepository.deleteById(id); //TODO no esta borrando
+         topicoRepository.deleteById(id);
     }
 }

@@ -27,7 +27,7 @@ public class Curso {
     @Column(nullable = false)
     private String categoria;
 
-    @OneToMany(mappedBy = "curso",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "curso",cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
     private List<Topico> topicos;
 
     public Curso(DtoCurso dtoCurso){

@@ -44,8 +44,8 @@ public class TopicoController {
         }
     }
 
-    @Transactional
     @DeleteMapping("/{id}")
+    @Transactional
     public ResponseEntity<String> BorrarTopico(
             @PathVariable Long id){
         Optional<Topico> topicoOptional = topicoService.EncontrarTopicoPorId(id);
@@ -57,8 +57,8 @@ public class TopicoController {
         }
     }
 
-    @Transactional
     @PutMapping("/{id}")
+    @Transactional
     public ResponseEntity<DtoListadoTopicos> ActualizarTopico(
             @RequestBody @Valid DtoActualizarTopico nuevosDatos,
             @PathVariable Long id){
@@ -72,13 +72,13 @@ public class TopicoController {
     }
 
     @PostMapping
-    public ResponseEntity<Topico> RegistrarTopico(@RequestBody @Valid DtoTopico dtoTopico){
+    public ResponseEntity<DtoListadoTopicos> RegistrarTopico(@RequestBody @Valid DtoTopico dtoTopico){
         if (topicoService.ValidarTopicoExiste(dtoTopico)){
             return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).build();
         }
         else {
             topico = topicoService.crearTopico(dtoTopico);
-            return ResponseEntity.status(HttpStatus.CREATED).body(topico);
+            return ResponseEntity.status(HttpStatus.CREATED).body(new DtoListadoTopicos(topico));
         }
     }
 

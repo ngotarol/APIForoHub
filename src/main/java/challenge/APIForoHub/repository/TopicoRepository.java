@@ -3,7 +3,9 @@ package challenge.APIForoHub.repository;
 import challenge.APIForoHub.model.Topico;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import org.hibernate.sql.Delete;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 
@@ -21,4 +23,5 @@ public interface TopicoRepository extends JpaRepository<Topico,Long> {
         ) String mensaje);
 
     Optional<Topico> findById(Long id);
+
 }
