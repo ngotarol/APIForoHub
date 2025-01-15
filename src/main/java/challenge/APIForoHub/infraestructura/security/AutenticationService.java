@@ -1,4 +1,4 @@
-package challenge.APIForoHub.service;
+package challenge.APIForoHub.infraestructura.security;
 
 import challenge.APIForoHub.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;

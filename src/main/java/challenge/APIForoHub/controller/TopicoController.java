@@ -15,7 +15,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.Optional;
 
 
@@ -30,9 +32,9 @@ public class TopicoController {
         this.topicoService = topicoService;
     }
     @GetMapping
-    public Page<DtoListadoTopicos> listadoTopicos(
+    public ResponseEntity<Page<DtoListadoTopicos>> listadoTopicos(
             @PageableDefault(size = 10, sort = "fechaCreacion", direction = Sort.Direction.DESC) Pageable paginacion){
-        return topicoService.ListarTodosLosTopicos(paginacion);
+        return ResponseEntity.ok(topicoService.ListarTodosLosTopicos(paginacion));
     }
     @GetMapping("/{id}")
     public ResponseEntity<DtoListadoTopicos> DetalleTopico(@PathVariable Long id){
@@ -51,7 +53,7 @@ public class TopicoController {
         Optional<Topico> topicoOptional = topicoService.EncontrarTopicoPorId(id);
         if (topicoOptional.isPresent()) {
             topicoService.EliminarTopico(topicoOptional.get().getId());
-            return ResponseEntity.ok().build();
+            return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
@@ -72,13 +74,16 @@ public class TopicoController {
     }
 
     @PostMapping
-    public ResponseEntity<DtoListadoTopicos> RegistrarTopico(@RequestBody @Valid DtoTopico dtoTopico){
+    public ResponseEntity<DtoListadoTopicos> RegistrarTopico(
+            @RequestBody @Valid DtoTopico dtoTopico,
+            UriComponentsBuilder uriComponentsBuilder){
         if (topicoService.ValidarTopicoExiste(dtoTopico)){
             return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).build();
         }
         else {
             topico = topicoService.crearTopico(dtoTopico);
-            return ResponseEntity.status(HttpStatus.CREATED).body(new DtoListadoTopicos(topico));
+            URI url = uriComponentsBuilder.path("/topicos/{id}").buildAndExpand(topico.getId()).toUri();
+            return ResponseEntity.created(url).body(new DtoListadoTopicos(topico));
         }
     }
 
