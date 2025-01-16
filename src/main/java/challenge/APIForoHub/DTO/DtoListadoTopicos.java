@@ -6,6 +6,7 @@ import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import java.time.LocalDateTime;
 
 public record DtoListadoTopicos(
+        Long id,
         String titulo,
         String mensaje,
         LocalDateTime fechaCreacion,
@@ -14,12 +15,18 @@ public record DtoListadoTopicos(
         String curso
 ) {
     public DtoListadoTopicos(Topico topico){
-        this(topico.getTitulo(),
+        this(topico.getId(),
+                topico.getTitulo(),
                 topico.getMensaje(),
                 topico.getFechaCreacion(),
                 topico.getEstado(),
                 topico.getAutor().getNombre(),
                 topico.getCurso().getNombre());
+    }
+
+    @Override
+    public Long id() {
+        return id;
     }
 
     @Override

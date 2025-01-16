@@ -2,6 +2,7 @@ package challenge.APIForoHub.model;
 
 import challenge.APIForoHub.DTO.DtoAutenticacionUsuario;
 import challenge.APIForoHub.DTO.DtoUsuario;
+import challenge.APIForoHub.infraestructura.security.SecurityConfigurations;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
