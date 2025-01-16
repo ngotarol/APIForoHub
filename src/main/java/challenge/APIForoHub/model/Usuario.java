@@ -1,7 +1,7 @@
 package challenge.APIForoHub.model;
 
+import challenge.APIForoHub.DTO.DtoAutenticacionUsuario;
 import challenge.APIForoHub.DTO.DtoUsuario;
-import challenge.APIForoHub.repository.PerfilRepository;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -9,7 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -47,6 +46,10 @@ public class Usuario implements UserDetails {
         this.login = dtoUsuario.correoElectronico();
         this.clave = dtoUsuario.contrasena();
         this.perfil = perfil;
+    }
+    public Usuario(DtoAutenticacionUsuario dtoAutenticacionUsuario){
+        this.login = dtoAutenticacionUsuario.correoElectronico();
+        this.clave = dtoAutenticacionUsuario.contrasena();
     }
 
     @Override
